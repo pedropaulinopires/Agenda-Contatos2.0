@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+@media only screen and (min-width: 768px) {
+    html{
+        height: 80vh;
+    }
+    div#img{
+        float: right;
+        width: 50%;
+        padding-top: 545px;
+    }
+
+
+    form{
+        padding-top: 5rem;
+        float: left;
+        width: 50%;
+        height: 100%;
+    }
+
+}
+

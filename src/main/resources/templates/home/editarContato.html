@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+  <link rel="stylesheet" th:href="@{/css/home-media-query.css}">
+  <link rel="stylesheet" th:href="@{/css/home.css}">
+  <link rel="stylesheet" th:href="@{/css/home-modal.css}">
+  <link rel="stylesheet" th:href="@{/css/formEditContato.css}">
+  <link rel="shortcut icon" th:href="@{/imgs/favicon.ico}" type="image/x-icon">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+  <title>Editar Contato</title>
+</head>
+<body>
+
+<!--menu mobile-->
+<header th:replace="~{fragments/fragments :: headerMobile}"></header>
+<!--end menu mobile-->
+
+<!--menu desktop-->
+<header th:replace="~{fragments/fragments :: headerDesktop}"></header>
+<!--end menu desktop-->
+
+
+<!--form add-->
+<section id="formEditContato">
+  <div id="img" >
+    <!--img -->
+  </div>
+  <!--form-->
+  <form th:object="${contactRequest}" th:action="@{/{id}/editar(id=${contactId})}" method="POST">
+    <h1>Editar Contato</h1>
+    <p>Edite o contato existente!</p>
+    <div class="camp">
+      <input type="text" name="name" th:field="*{name}"  placeholder="Nome" th:errorClass="error"  >
+      <p class="error" th:errors="*{name}">Campo obrigatório</p>
+    </div>
+    <div class="camp">
+      <input type="text" name="email" th:field="*{email}"  placeholder="E-mail" th:errorClass="error"  >
+    </div>
+    <div class="camp">
+      <input type="number" name="number" th:field="*{number}" placeholder="Numero" th:errorClass="error"  >
+      <p class="error" th:errors="*{number}">Campo obrigatório</p>
+    </div>
+    <p  style="text-align: center;">
+      <button class="especial" type="submit">Editar</button>
+      <a  th:href="@{/}"><button type="button" class="cancel">Cancelar</button></a>
+    </p>
+  </form>
+  <!--end form-->
+</section>
+<!--end form add-->
+<br>
+
+<!--modal logout-->
+<div th:replace="~{fragments/fragments :: modalLogout}"></div>
+<!--end modal logout-->
+<div th:replace="~{fragments/fragments :: scrollToTop}"></div>
+<footer th:replace="~{fragments/fragments :: footer}"></footer>
+<script th:src="@{/js/mediaQueryComponents.js}"></script>
+<script th:src="@{/js/modalDelete.js}"></script>
+<script th:src="@{/js/modalLogout.js}"></script>
+<script th:src="@{/js/menuMobile.js}"></script>
+<script th:src="@{/js/scrollTop.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+</body>
+</html>

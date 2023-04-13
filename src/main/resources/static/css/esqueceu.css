@@ -1,0 +1,144 @@
+@charset "UTF-8";
+
+:root{
+    --azulEscuro:#3513BD;
+    --azulClaro:#0050F0;
+    --roxo:#48378A;
+    --amarelo:#F2A73C;
+    --laranja: #BD5F13;
+    --font: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+}
+html,body{
+    background-image: linear-gradient(to bottom,var(--azulEscuro),var(--azulClaro));
+    background-size: 100% 130%;
+    
+}
+main{
+    background-color: white;
+    width: 90%;
+    max-width: 800px;
+    margin: auto;
+    margin-top: 10vh;
+    margin-bottom: 10vh;
+    border-radius: 2rem;
+    box-shadow: 0px 0px 100px rgba(0, 0, 0, 0.692);
+    overflow: hidden;
+}
+
+div#img{
+    background-image: url(../imgs/esqueceuImg.jpg);
+    height: 40vh;
+    background-size: cover;
+    background-position: center;
+    display: block;
+}
+form h1{
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+
+    font-family:serif;
+
+}
+form p{
+    text-align: center;
+    font-family: var(--font);
+    margin-bottom: 1rem;
+}
+form{
+    display: block;
+}
+form div.camp{
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+form div input{
+    border: 1px solid black;
+    border-radius: 10rem;
+    height: 35px;
+    width: 80%;
+    padding-left: 1rem;
+    font-size: 1rem;
+}
+div.btn{
+    text-align: center;
+    margin-bottom: 1rem;
+}
+button{
+    cursor: pointer;
+    padding: .3rem 1rem;
+    font-size: 1.2rem;
+    background-color: white;
+    margin: 1rem;
+    border: 1px solid var(--azulClaro);
+    border-radius: 2rem;
+    color: var(--azulClaro);
+    font-weight: 700;
+    transition: all .5s;
+
+}
+.cancel{
+    border: 1px solid red;
+    color: red;
+}
+.cancel:hover{
+    background-color: red;
+}
+
+div.alert{
+    border: 1px solid #370000;
+    background-color: #fbcdd1;
+    color: #260800;
+    border-radius: 2rem;
+    width: 50%;
+    padding: .5rem;
+    font-size: 1.1rem;
+    margin: auto;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+p.success{
+    border: 1px solid green;
+    background-color: rgb(172, 227, 172);
+    color: rgb(0, 48, 0);
+    border-radius: 2rem;
+    max-width: 80%;
+    padding: .5rem;
+    font-size: 1.1rem;
+    margin: auto;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+p.error{
+    color:red;
+}
+
+form div input.error{
+    border: 1px solid red;
+}
+
+
+/*hovers*/
+@media (hover: hover) and (pointer: fine) {
+    div.extra a:hover{
+        color: var(--azulEscuro);
+    }  
+
+    button:hover{
+        background-color: var(--azulClaro);
+        color: white;
+        transition:all .5s;
+    }
+}
+/**------------------**/
