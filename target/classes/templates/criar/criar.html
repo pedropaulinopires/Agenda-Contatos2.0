@@ -10,43 +10,48 @@
     <title>Criar Conta</title>
 </head>
 <body>
-    <main>
-        <div id="img" >
-            <!--img -->
+<main>
+    <div id="img">
+        <!--img -->
+    </div>
+    <!--form-->
+    <form th:object="${loginRequest}" th:action="@{/create-account}" method="POST">
+        <h1>Criar Conta</h1>
+        <p>Olá, preencha todos os dados pra criar sua conta!</p>
+        <div th:if="${errorUser}" class="alert">
+            Erro ao criar conta, pois esse usuário já está em uso!
         </div>
-        <!--form-->
-        <form th:object="${loginRequest}" th:action="@{/create-account}" method="POST">
-            <h1>Criar Conta</h1>
-            <p>Olá, preencha todos os dados pra criar sua conta!</p>
-            <div th:if="${errorUser}" class="alert">
-                Erro ao criar conta, pois esse usuário já está em uso!
-            </div>
-            <div class="camp">
-                <input type="text" name="name" th:field="*{name}"  placeholder="Nome" th:errorClass="error"  minlength="5">
-                <p class="error" th:errors="*{name}">Campo obrigatório</p>
-            </div>
-            <div class="camp">
-                <input type="text" name="username" th:field="*{username}" th:attr="class=${errorUser != null ? 'error' : ''}" placeholder="Usuário" th:errorClass="error"  minlength="8">
-                <p class="error" th:errors="*{username}">Campo obrigatório</p>
-            </div>
-            <div class="camp">
-                <input type="text" name="password" th:field="*{password}" placeholder="Senha" th:errorClass="error"  minlength="8">
-                <p class="error" th:errors="*{password}">Campo obrigatório</p>
-            </div>
-           
-            <div class="campCheck">
-                <label for="imasc">Masculino</label>
-                <input style="margin-right: 2rem;" type="radio" th:field="*{sex}" name="sex" id="imasc" value="M"  >
-                <label for="ifem">Feminino</label>
-                <input type="radio" name="sex" th:field="*{sex}" id="ifem" value="F" >
-            </div>
-            <p class="error" th:errors="*{sex}">Campo obrigatório</p>
-            <div class="btn">
-                <button type="submit">Criar</button>
-                <a  th:href="@{/}"><button type="button" class="cancel">Cancelar</button></a>
-            </div>
-        </form>
-        <!--end form-->
-    </main>
+        <div class="camp">
+            <input type="text" name="name" th:field="*{name}" placeholder="Nome" th:errorClass="error" minlength="5">
+            <p class="error" th:errors="*{name}">Campo obrigatório</p>
+        </div>
+        <div class="camp">
+            <input type="text" name="username" th:field="*{username}"
+                   th:attr="class=${errorUser != null ? 'error' : ''}" placeholder="Usuário" th:errorClass="error"
+                   minlength="8">
+            <p class="error" th:errors="*{username}">Campo obrigatório</p>
+        </div>
+        <div class="camp">
+            <input type="text" name="password" th:field="*{password}" placeholder="Senha" th:errorClass="error"
+                   minlength="8">
+            <p class="error" th:errors="*{password}">Campo obrigatório</p>
+        </div>
+
+        <div class="campCheck">
+            <label for="imasc">Masculino</label>
+            <input style="margin-right: 2rem;" type="radio" th:field="*{sex}" name="sex" id="imasc" value="M">
+            <label for="ifem">Feminino</label>
+            <input type="radio" name="sex" th:field="*{sex}" id="ifem" value="F">
+        </div>
+        <p class="error" th:errors="*{sex}">Campo obrigatório</p>
+        <div class="btn">
+            <button type="submit">Criar</button>
+            <a th:href="@{/}">
+                <button type="button" class="cancel">Cancelar</button>
+            </a>
+        </div>
+    </form>
+    <!--end form-->
+</main>
 </body>
 </html>
