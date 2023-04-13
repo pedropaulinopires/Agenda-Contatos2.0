@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+@media only screen and (min-width: 768px) {
+    html{
+        height: 80vh;
+    }
+    div#img{
+        background-image: url(../imgs/imgForm.jpg);
+        float: right;
+        width: 50%;
+        padding-top:506px;
+        background-size: cover;
+        background-position: center;
+        display: block;
+    }
+
+    form{
+        padding-top: 5rem;
+        float: left;
+        width: 50%;
+        height: 100%;
+    }
+
+}

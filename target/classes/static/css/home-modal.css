@@ -1,0 +1,149 @@
+@charset "UTF-8";
+
+:root{
+    --azulEscuro:#3513BD;
+    --azulClaro:#0050F0;
+    --roxo:#48378A;
+    --amarelo:#F2A73C;
+    --laranja: #BD5F13;
+    --font: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    font-family: var(--font);
+    scroll-behavior: smooth;
+}
+
+div#fadeLogout{
+    background-color: rgba(0, 0, 0, 0.472);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .8s;
+}
+
+div#modalLogout{
+    width: 80%;
+    z-index: 9;
+    max-width: 600px;
+    background-color: white;
+    position: fixed;
+    top: -50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 9;
+    border-radius: .5rem;
+    pointer-events: none;
+    transition: top .5s;
+}
+
+div#fadeLogout.active{
+    opacity: 1;
+    pointer-events: all;
+    transition: opacity .8s;
+}
+
+div#modalLogout.active{
+    top:50%;
+    pointer-events: all;
+    transition: top .5s;
+}
+
+div#modalLogoutHeader{
+    text-align: center;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid  rgb(91, 91, 91);
+}
+
+div#modalLogoutBody{
+    text-align: center;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgb(91, 91, 91) ;
+}
+
+div#modalLogoutFooter{
+    text-align: center;
+    padding-bottom: 1rem;
+}
+
+div#modalLogoutFooter button{
+    margin: .5rem;
+}
+
+
+
+
+
+div.fadeDelete{
+    background-color: rgba(0, 0, 0, 0.472);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .8s;
+}
+
+div.modalDelete{
+    width: 80%;
+    z-index: 9;
+    max-width: 600px;
+    background-color: white;
+    position: fixed;
+    top: -50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 9;
+    border-radius: .5rem;
+    pointer-events: none;
+    transition: top .5s;
+}
+
+div.fadeDelete.active{
+    opacity: 1;
+    pointer-events: all;
+    transition: opacity .8s;
+}
+
+div.modalDelete.active{
+    top:50%;
+    pointer-events: all;
+    transition: top .5s;
+}
+
+div.modalDeleteHeader{
+    text-align: center;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid  rgb(91, 91, 91);
+}
+
+div.modalDeleteBody{
+    text-align: center;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgb(91, 91, 91) ;
+}
+
+div.modalDeleteFooter{
+    text-align: center;
+    padding-bottom: 1rem;
+}
+
+div.modalDeleteFooter button{
+    margin: .5rem;
+}

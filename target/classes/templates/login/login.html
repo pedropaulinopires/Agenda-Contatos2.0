@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/login-media-query.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="shortcut icon" th:href="@{/imgs/favicon.ico}" type="image/x-icon">
+    <title>Login</title>
+</head>
+<body>
+    <main>
+        <div style="height:40vh" id="img">
+            <!--img -->
+        </div>
+        <!--form-->
+        <form th:object="${loginSingInRequest}" action="/sing-in" method="post">
+            <h1>Login</h1>
+            <p>Olá, seja bem vindo(a) novamente!</p>
+            <div class="camp">
+                <input type="text" th:field="*{username}" th:errorClass="error" name="username" id="iuser" placeholder="Usuário"  minlength="8">
+                <p class="error" th:errors="*{username}"></p>
+            </div>
+            <div class="camp">
+                <input type="password" th:errorClass="error" th:field="*{password}" name="password" id="ipassword" placeholder="Senha" >
+                <p class="error" th:errors="*{password}"></p>
+            </div>
+            <div class="camp check" >
+                <input type="checkbox" name="remember" id="iremember">
+                <label for="iremember">Lembrar-me</label>
+            </div>
+            <div class="alert" th:if="${errorUser}">
+                Usuário/senha iválido
+            </div>
+            <div th:if="${param.logout}" class="success">
+                Logout concluido com sucesso!
+            </div>
+            <div class="btn">
+                <button type="submit" >Entrar</button>
+            </div>
+            <div class="extra">
+                <p><a th:href="@{/criar}">Cadastre-se</a> | <a th:href="@{/esqueceu}">Esqueceu a senha?</a></p>
+            </div>
+        </form>
+        <!--end form-->
+    </main>
+</body>
+</html>

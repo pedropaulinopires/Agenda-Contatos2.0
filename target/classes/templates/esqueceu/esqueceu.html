@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/esqueceu.css}">
+    <link rel="stylesheet" th:href="@{/css/esqueceu-media-query.css}">
+    <link rel="shortcut icon" th:href="@{/imgs/favicon.ico}" type="image/x-icon">
+    <title>Esqueceu senha</title>
+</head>
+<body>
+    <main>
+        <div id="img">
+            <!--img -->
+        </div>
+        <!--form-->
+        <form th:object="${rememberPassword}" th:action="@{/remember-password}" method="POST">
+            <h1>Esqueceu sua senha?</h1>
+            <p>Olá, digite seu usuário e uma nova senha para ele!</p>
+            <div class="camp">
+                <input type="text" th:errorClass="error" th:field="*{username}" th:attr="class=${userInvalid != null ? 'error' : ''}" name="username"  placeholder="Usuário"  minlength="8">
+                <p class="error" th:errors="*{username}"></p>
+            </div>
+            <div class="camp">
+                <input type="text" th:errorClass="error" th:field="*{password}" name="password" placeholder="nova senha">
+                <p class="error" th:errors="*{password}"></p>
+            </div>
+            <div th:if="${userInvalid}" class="alert">
+                Usuário iválido
+            </div>
+            <div class="btn">
+                <button type="submit">Salvar</button>
+                <a th:href="@{/}"><button type="button" class="cancel">Cancelar</button></a>
+            </div>
+        </form>
+        <!--end form-->
+    </main>
+</body>
+</html>
