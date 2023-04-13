@@ -21,7 +21,7 @@ public class Login {
     @Column(nullable = false, length = 100)
     private String name;
 
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false, unique = true)
     private String username;
 
     @Column(nullable = false)

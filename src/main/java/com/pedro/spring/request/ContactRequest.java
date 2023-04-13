@@ -28,26 +28,15 @@ public class ContactRequest {
     private Login login;
 
 
-    public Contact build(){
-        return new Contact().builder()
-                .name(this.name)
-                .email(this.email)
-                .number(this.number)
-                .login(this.login)
-                .build();
+    public Contact build() {
+        return new Contact().builder().name(this.name).email(this.email).number(this.number).login(this.login).build();
     }
 
-    public Contact build(ContactRequest contact, UUID id){
-        return new Contact().builder()
-                .id(id)
-                .name(this.name)
-                .email(this.email)
-                .number(this.number)
-                .login(this.login)
-                .build();
+    public Contact build(ContactRequest contact, UUID id) {
+        return new Contact().builder().id(id).name(this.name).email(this.email).number(this.number).login(this.login).build();
     }
 
-    public void fromContact(Contact contact){
+    public void fromContact(Contact contact) {
         this.name = contact.getName();
         this.email = contact.getEmail();
         this.number = contact.getNumber();

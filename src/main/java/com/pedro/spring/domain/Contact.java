@@ -27,12 +27,7 @@ public class Contact {
     @ManyToOne
     private Login login;
 
-    public Contact build(){
-        return new Contact().builder()
-                .name(this.name)
-                .email(this.email)
-                .number(this.number)
-                .login(this.login)
-                .build();
+    public Contact build() {
+        return new Contact().builder().name(this.name).email(this.email).number(this.number).login(this.login).build();
     }
 }

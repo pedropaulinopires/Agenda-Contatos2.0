@@ -1,19 +1,19 @@
 <!--head-->
 <head th:fragment="head(title)" xmlns:th="http://www.w3.org/1999/xhtml">
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-  <link rel="stylesheet" th:href="@{/css/home-media-query.css}">
-  <link rel="stylesheet" th:href="@{/css/home.css}">
-  <link rel="stylesheet" th:href="@{/css/home-modal.css}">
-  <link rel="shortcut icon" th:href="@{/imgs/favicon.ico}" type="image/x-icon">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
-  <title th:text="${title}">Title</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/home-media-query.css}">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link rel="stylesheet" th:href="@{/css/home-modal.css}">
+    <link rel="shortcut icon" th:href="@{/imgs/favicon.ico}" type="image/x-icon">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+    <title th:text="${title}">Title</title>
 </head>
 <!--end head-->
-
-
 
 
 <!--menu mobile-->
@@ -23,151 +23,163 @@
       <div class="line2"></div>
       <div class="line3"></div>
     </span>
-  <p id="msgMobile" th:if="${msg != null}" th:text="${msg}"></p>
-  <menu id="menuMobileItens">
-    <ul>
-      <li>
-        <a th:href="@{/home}" th:class="${sectionHome != null ? 'sectionActive' : ''}" onclick="menu()">Home</a>
-      </li>
-      <li>
-        <a th:href="@{/novoContato}" onclick="menu()" th:class="${sectionNovoContato != null ? 'sectionActive' : ''}">Novo Contato</a>
-      </li>
-      <li>
-        <a th:href="@{/editarPerfil}" onclick="menu()" th:class="${sectionEditarPerfil != null ? 'sectionActive' : ''}">Editar Perfil</a>
-      </li>
-      <li>
-        <a href="https://github.com/pedropaulinopires/Agenda_Contatos2.0" target="_blank" rel="external"
-           onclick="menu()">Git Hub do projeto</a>
-      </li>
-      <li>
-        <a onclick="menu(),modalLogoutClick()">Sair</a>
-      </li>
-    </ul>
-  </menu>
+    <p id="msgMobile" th:if="${msg != null}" th:text="${msg}"></p>
+    <menu id="menuMobileItens">
+        <ul>
+            <li>
+                <a th:href="@{/home}" th:class="${sectionHome != null ? 'sectionActive' : ''}" onclick="menu()">Home</a>
+            </li>
+            <li>
+                <a th:href="@{/novoContato}" onclick="menu()"
+                   th:class="${sectionNovoContato != null ? 'sectionActive' : ''}">Novo Contato</a>
+            </li>
+            <li>
+                <a th:href="@{/editarPerfil}" onclick="menu()"
+                   th:class="${sectionEditarPerfil != null ? 'sectionActive' : ''}">Editar Perfil</a>
+            </li>
+            <li>
+                <a href="https://github.com/pedropaulinopires/Agenda_Contatos2.0" target="_blank" rel="external"
+                   onclick="menu()">Git Hub do projeto</a>
+            </li>
+            <li>
+                <a onclick="menu(),modalLogoutClick()">Sair</a>
+            </li>
+        </ul>
+    </menu>
 </header>
 <!--end menu mobile-->
 
 
 <!--menu desktop-->
 <header th:fragment="headerDesktop" id="menu" xmlns:th="http://www.w3.org/1999/xhtml">
-  <a th:href="@{/home}" th:class="${sectionHome != null ? 'sectionActive' : ''}">Home</a>
-  <a th:href="@{/novoContato}" th:class="${sectionNovoContato != null ? 'sectionActive' : ''}">Novo Contato</a>
-  <a th:href="@{/editarPerfil}" th:class="${sectionEditarPerfil != null ? 'sectionActive' : ''}">Editar Perfil</a>
-  <a href="https://github.com/pedropaulinopires/Agenda_Contatos2.0" target="_blank" rel="external">Git Hub do
-    projeto</a>
-  <a onclick="modalLogoutClick()" >Sair</a>
-  <p id="msgDesktop" th:text="${msg}"></p>
+    <a th:href="@{/home}" th:class="${sectionHome != null ? 'sectionActive' : ''}">Home</a>
+    <a th:href="@{/novoContato}" th:class="${sectionNovoContato != null ? 'sectionActive' : ''}">Novo Contato</a>
+    <a th:href="@{/editarPerfil}" th:class="${sectionEditarPerfil != null ? 'sectionActive' : ''}">Editar Perfil</a>
+    <a href="https://github.com/pedropaulinopires/Agenda_Contatos2.0" target="_blank" rel="external">Git Hub do
+        projeto</a>
+    <a onclick="modalLogoutClick()">Sair</a>
+    <p id="msgDesktop" th:text="${msg}"></p>
 </header>
 <!--end menu desktop-->
 
 <!--cards-->
 
-<div th:fragment="cards" xmlns:th="http://www.w3.org/1999/xhtml" id="cards" style="text-align: center;margin-bottom:2rem;">
+<div th:fragment="cards" xmlns:th="http://www.w3.org/1999/xhtml" id="cards"
+     style="text-align: center;margin-bottom:2rem;">
 
-  <div th:each="list : ${list.content}" class="card">
+    <div th:each="list : ${list.content}" class="card">
 
-    <!-- Modal delete-->
-    <div class="modal fade" th:id="'deleteModal'+${list.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Excluir Contato!</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body" style="text-align: center;">
-            Você realmente deseja excluir esse contato?
-          </div>
-          <div class="modal-footer">
-            <a th:href="@{/delete/{id}(id=${list.id})}"><button type="button" class="btn btn-primary" data-bs-dismiss="modal">Excluir</button></a>
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-          </div>
+        <!-- Modal delete-->
+        <div class="modal fade" th:id="'deleteModal'+${list.id}" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Excluir Contato!</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" style="text-align: center;">
+                        Você realmente deseja excluir esse contato?
+                    </div>
+                    <div class="modal-footer">
+                        <a th:href="@{/delete/{id}(id=${list.id})}">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Excluir</button>
+                        </a>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  <!--End modal delete-->
+        <!--End modal delete-->
 
-    <!--Modal clear-->
-    <div class="modal fade" id="modalClear" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" >Limpar Lista</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body" style="text-align: center;">
-            Você realmente deseja limpar toda lista?
-          </div>
-          <div class="modal-footer">
-            <a th:href="@{/limparLista}"><button type="button" class="btn btn-primary" >Limpar</button></a>
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-          </div>
+        <!--Modal clear-->
+        <div class="modal fade" id="modalClear" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Limpar Lista</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" style="text-align: center;">
+                        Você realmente deseja limpar toda lista?
+                    </div>
+                    <div class="modal-footer">
+                        <a th:href="@{/limparLista}">
+                            <button type="button" class="btn btn-primary">Limpar</button>
+                        </a>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+        <!--End modal clear-->
+        <div class="headerCardCntt">
+            <h3 th:text="${list.name}">name</h3>
+        </div>
+        <div class="bodyCardCntt">
+            <p th:text="${list.email}">email</p>
+            <p th:text="${list.number}">number</p>
+        </div>
+        <div class="footerCardCntt">
+            <a th:href="@{/{id}(id=${list.id})}">
+                <button type="button" class="btn btn-primary">Editar</button>
+            </a>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                    th:attr="data-bs-target='#deleteModal'+${list.id}">Excluir
+            </button>
+        </div>
     </div>
-    <!--End modal clear-->
-    <div class="headerCardCntt">
-      <h3 th:text="${list.name}">name</h3>
-    </div>
-    <div class="bodyCardCntt">
-      <p th:text="${list.email}">email</p>
-      <p th:text="${list.number}">number</p>
-    </div>
-    <div class="footerCardCntt">
-      <a th:href="@{/{id}(id=${list.id})}"><button  type="button" class="btn btn-primary" >Editar</button></a>
-      <button type="button" class="btn btn-danger" data-bs-toggle="modal" th:attr="data-bs-target='#deleteModal'+${list.id}">Excluir</button>
-    </div>
-  </div>
 
 
-  <!--card add-->
-  <div class="card">
-    <div class="headerCardAdd">
-      <h3>Adicionar contato</h3>
-    </div>
-    <div class="capCardAdd">
+    <!--card add-->
+    <div class="card">
+        <div class="headerCardAdd">
+            <h3>Adicionar contato</h3>
+        </div>
+        <div class="capCardAdd">
         <span class="iconAdd">
           <div class="edge1"></div>
           <div class="edge2"></div>
         </span>
+        </div>
+        <div class="footerCardAdd">
+            <a th:href="@{/novoContato}">
+                <button class="btnBlue">Adicionar</button>
+            </a>
+        </div>
     </div>
-    <div class="footerCardAdd">
-      <a th:href="@{/novoContato}">
-        <button class="btnBlue">Adicionar</button>
-      </a>
+    <!--pagination-->
+    <div id="pagination">
+        <nav th:if="${list.totalPages > 0}">
+            <ul class="pagination pagination-sm">
+                <li th:each="number : ${numberPages}"
+                    th:class="${number==list.number + 1} ? 'page-item active' : 'page-item'">
+                    <a class="page-link" th:href="@{/home(page=${number})}" th:text="${number}"></a>
+                </li>
+            </ul>
+        </nav>
     </div>
-  </div>
-  <!--pagination-->
-  <div id="pagination">
-    <nav th:if="${list.totalPages > 0}">
-      <ul class="pagination pagination-sm">
-        <li th:each="number : ${numberPages}"
-            th:class="${number==list.number + 1} ? 'page-item active' : 'page-item'">
-          <a class="page-link" th:href="@{/home(page=${number})}" th:text="${number}"></a>
-        </li>
-      </ul>
-    </nav>
-  </div>
 </div>
 <!--end cards-->
 
 <!--modal logout-->
 <div th:fragment="modalLogout" xmlns:th="http://www.w3.org/1999/xhtml">
-  <div id="fadeLogout" onclick="modalLogoutClick()"></div>
-  <div id="modalLogout">
-    <div id="modalLogoutHeader">
-      <h2>Sair</h2>
+    <div id="fadeLogout" onclick="modalLogoutClick()"></div>
+    <div id="modalLogout">
+        <div id="modalLogoutHeader">
+            <h2>Sair</h2>
+        </div>
+        <div id="modalLogoutBody">
+            <p>Você realmente deseja sair do sistema?</p>
+        </div>
+        <div id="modalLogoutFooter">
+            <a th:href="@{/logout}">
+                <Button class="btnBlue">Sair</Button>
+            </a>
+            <button class="btnRed" onclick="modalLogoutClick()">Cancelar</button>
+        </div>
     </div>
-    <div id="modalLogoutBody">
-      <p>Você realmente deseja sair do sistema?</p>
-    </div>
-    <div id="modalLogoutFooter">
-      <a th:href="@{/logout}">
-        <Button class="btnBlue">Sair</Button>
-      </a>
-      <button class="btnRed" onclick="modalLogoutClick()">Cancelar</button>
-    </div>
-  </div>
-  <!--end modal logout-->
+    <!--end modal logout-->
 </div>
 
 <!--Scroll to top-->
@@ -180,8 +192,8 @@
 
 <!--footer-->
 <footer th:fragment="footer" xmlns:th="http://www.w3.org/1999/xhtml">
-  <p>Site criado por <a href="https://www.instagram.com/pedropaulinopires/" target="_blank" rel="external">Pedro
-    Henrique </a> para os estudos</p>
+    <p>Site criado por <a href="https://www.instagram.com/pedropaulinopires/" target="_blank" rel="external">Pedro
+        Henrique </a> para os estudos</p>
 </footer>
 <!--end footer-->
 

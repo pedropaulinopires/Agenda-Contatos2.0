@@ -1,7 +1,6 @@
 package com.pedro.spring.repository;
 
 import com.pedro.spring.domain.Contact;
-import com.pedro.spring.domain.Login;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
