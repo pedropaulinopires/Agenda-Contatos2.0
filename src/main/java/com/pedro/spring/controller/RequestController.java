@@ -40,7 +40,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -63,8 +62,7 @@ public class RequestController {
     private void userSession(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
         try {
             if (CookieService.getCookie(request, USER_AUTHENTICATED) != null) {
-                Login userAuthenticated = loginService.findLoginById
-                        (UUID.fromString(CookieService.getCookie(request, USER_AUTHENTICATED)));
+                Login userAuthenticated = loginService.findLoginById(UUID.fromString(CookieService.getCookie(request, USER_AUTHENTICATED)));
                 session.setAttribute(USER_AUTHENTICATED, userAuthenticated);
             }
         } catch (Exception e) {
@@ -74,24 +72,25 @@ public class RequestController {
         }
     }
 
-    private void setMessageUser(ModelAndView mv,Login login){
-        if(login.getSex().equals(Sex.M)){
-            mv.addObject("msg","Olá, seja bem vindo "+login.getName()+" !");
+    private void setMessageUser(ModelAndView mv, Login login) {
+        if (login.getSex().equals(Sex.M)) {
+            mv.addObject("msg", "Olá, seja bem vindo " + login.getName() + " !");
         } else {
-            mv.addObject("msg","Olá, seja bem vinda "+login.getName()+" !");
+            mv.addObject("msg", "Olá, seja bem vinda " + login.getName() + " !");
         }
     }
 
 
-    private ModelAndView singInAfterUpdatePassword(LoginSingInRequest loginSingInRequest,HttpServletResponse response) throws UnsupportedEncodingException {
+    private ModelAndView singInAfterUpdatePassword(LoginSingInRequest loginSingInRequest, HttpServletResponse response) throws UnsupportedEncodingException {
         int timeAuthenticated = 60 * 60 * 24;
         Login loginByUsername = loginService.findLoginByUsername(loginSingInRequest.getUsername());
         CookieService.setCookie(response, USER_AUTHENTICATED, String.valueOf(loginByUsername.getId()), timeAuthenticated);
         ModelAndView mv = new ModelAndView("redirect:/home");
-        mv.addObject("success","Senha alterada com sucesso!");
+        mv.addObject("success", "Senha alterada com sucesso!");
         return mv;
 
     }
+
     @GetMapping("/")
     public ModelAndView home(HttpServletRequest request, LoginSingInRequest loginSingInRequest) throws NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         try {
@@ -105,12 +104,7 @@ public class RequestController {
     }
 
     @PostMapping("/sing-in")
-    public ModelAndView singIn(@Valid LoginSingInRequest loginSingInRequest
-            , BindingResult bindingResult
-            , HttpServletRequest request
-            , HttpServletResponse response
-            , HttpSession session
-            , @Param("remember") String remember) throws UnsupportedEncodingException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+    public ModelAndView singIn(@Valid LoginSingInRequest loginSingInRequest, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response, HttpSession session, @Param("remember") String remember) throws UnsupportedEncodingException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         if (bindingResult.hasErrors()) {
             //error
             ModelAndView mv = new ModelAndView("login/login");
@@ -151,24 +145,22 @@ public class RequestController {
         //search login and add session
         Login login = (Login) session.getAttribute(USER_AUTHENTICATED);
         //set message initial
-        setMessageUser(mv,login);
+        setMessageUser(mv, login);
         //get list contacts
         int currentPage = page.orElse(1) - 1;
 
         PageRequest pageable = PageRequest.of(currentPage, 8, Sort.by("name"));
-        Page<Contact> listPageable = contactService.findAllContactByIdLogin(login.getId(),pageable);
+        Page<Contact> listPageable = contactService.findAllContactByIdLogin(login.getId(), pageable);
 
         mv.addObject("list", listPageable);
 
         int totalPages = listPageable.getTotalPages();
         if (totalPages > 0) {
-            List<Integer> numberPage = IntStream.rangeClosed(1, totalPages)
-                    .boxed()
-                    .collect(Collectors.toList());
+            List<Integer> numberPage = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
             mv.addObject("numberPages", numberPage);
         }
         //sectionHome
-        mv.addObject("sectionHome",Boolean.TRUE);
+        mv.addObject("sectionHome", Boolean.TRUE);
         return mv;
     }
 
@@ -206,7 +198,7 @@ public class RequestController {
     }
 
     @PostMapping("/remember-password")
-    public ModelAndView rememberPassword(@Valid RememberPassword rememberPassword, BindingResult bindingResult,HttpServletResponse response) throws UnsupportedEncodingException {
+    public ModelAndView rememberPassword(@Valid RememberPassword rememberPassword, BindingResult bindingResult, HttpServletResponse response) throws UnsupportedEncodingException {
         if (bindingResult.hasErrors()) {
             //error camp invalid!
             return new ModelAndView("esqueceu/esqueceu");
@@ -221,7 +213,7 @@ public class RequestController {
                 LoginSingInRequest loginSingInRequest = new LoginSingInRequest();
                 loginSingInRequest.setPassword(loginNew.getPassword());
                 loginSingInRequest.setUsername(loginNew.getUsername());
-                return singInAfterUpdatePassword(loginSingInRequest,response);
+                return singInAfterUpdatePassword(loginSingInRequest, response);
             } else {
                 //username not found
                 ModelAndView mv = new ModelAndView("esqueceu/esqueceu");
@@ -232,51 +224,51 @@ public class RequestController {
     }
 
     @GetMapping("/editarPerfil")
-    public ModelAndView editarPerfil(HttpSession session,HttpServletRequest request,HttpServletResponse response,LoginRequest loginRequest) throws UnsupportedEncodingException {
+    public ModelAndView editarPerfil(HttpSession session, HttpServletRequest request, HttpServletResponse response, LoginRequest loginRequest) throws UnsupportedEncodingException {
         userSession(session, request, response);
         ModelAndView mv = new ModelAndView("home/editarPerfil");
         //set message user
         Login login = (Login) session.getAttribute(USER_AUTHENTICATED);
-        setMessageUser(mv,login);
+        setMessageUser(mv, login);
         //section sectionEditarPerfil
-        mv.addObject("sectionEditarPerfil",Boolean.TRUE);
+        mv.addObject("sectionEditarPerfil", Boolean.TRUE);
         //set object loginRequest
         loginRequest.fromLogin(login);
         return mv;
     }
 
     @PostMapping("/updatePerfil")
-    public ModelAndView updatePerfil(@Valid LoginRequest loginRequest,BindingResult bindingResult,HttpSession session,HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException {
+    public ModelAndView updatePerfil(@Valid LoginRequest loginRequest, BindingResult bindingResult, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
         userSession(session, request, response);
         Login login = (Login) session.getAttribute(USER_AUTHENTICATED);
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             //error camp inválid!
             ModelAndView mv = new ModelAndView("home/editarPerfil");
             //set message user
-            setMessageUser(mv,login);
+            setMessageUser(mv, login);
             //section sectionEditarPerfil
-            mv.addObject("sectionEditarPerfil",Boolean.TRUE);
+            mv.addObject("sectionEditarPerfil", Boolean.TRUE);
             return mv;
-        } else{
+        } else {
             //sucess check username
             Login loginByUsername = loginService.findLoginByUsername(loginRequest.getUsername());
             //user loged
             Login userLogin = (Login) session.getAttribute(USER_AUTHENTICATED);
-            if(userLogin.getUsername().equals(loginRequest.getUsername()) || loginByUsername == null){
+            if (userLogin.getUsername().equals(loginRequest.getUsername()) || loginByUsername == null) {
                 //edit login success full
                 loginRequest.setPassword(getPasswordEncoder().encode(loginRequest.getPassword()));
-                loginService.replaceLogin(loginRequest,userLogin.getId());
+                loginService.replaceLogin(loginRequest, userLogin.getId());
                 ModelAndView mv = new ModelAndView("redirect:/home");
-                mv.addObject("success","Perfil editado com sucesso!");
+                mv.addObject("success", "Perfil editado com sucesso!");
                 return mv;
             } else {
                 //error edit login
                 ModelAndView mv = new ModelAndView("home/editarPerfil");
                 //set message user
-                setMessageUser(mv,login);
+                setMessageUser(mv, login);
                 //section sectionEditarPerfil
-                mv.addObject("sectionEditarPerfil",Boolean.TRUE);
-                mv.addObject("errorUser",Boolean.TRUE);
+                mv.addObject("sectionEditarPerfil", Boolean.TRUE);
+                mv.addObject("errorUser", Boolean.TRUE);
                 return mv;
             }
 
@@ -284,34 +276,34 @@ public class RequestController {
     }
 
     @GetMapping("/novoContato")
-    public ModelAndView novoContato(HttpSession session,HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException {
-        userSession(session,request,response);
+    public ModelAndView novoContato(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+        userSession(session, request, response);
         Login login = (Login) session.getAttribute(USER_AUTHENTICATED);
         ModelAndView mv = new ModelAndView("home/novoContato");
-        mv.addObject("sectionNovoContato",Boolean.TRUE);
-        setMessageUser(mv,login);
+        mv.addObject("sectionNovoContato", Boolean.TRUE);
+        setMessageUser(mv, login);
         return mv;
     }
 
     @PostMapping("/adicionarContato")
-    public ModelAndView adicionarContato(@Valid ContactRequest contactRequest,BindingResult bindingResult,HttpSession session,HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException {
-        userSession(session,request,response);
+    public ModelAndView adicionarContato(@Valid ContactRequest contactRequest, BindingResult bindingResult, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+        userSession(session, request, response);
         Login login = (Login) session.getAttribute(USER_AUTHENTICATED);
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             //error camp invalid
-            ModelAndView mv =  new ModelAndView("home/novoContato");
+            ModelAndView mv = new ModelAndView("home/novoContato");
 
             return mv;
         } else {
             //success and add contact
-            if(contactRequest.getEmail().equals("")){
+            if (contactRequest.getEmail().equals("")) {
                 contactRequest.setEmail("Não possui e-mail!");
             }
             contactRequest.setLogin(login);
             contactService.saveContact(contactRequest);
             ModelAndView mv = new ModelAndView("redirect:/home");
-            setMessageUser(mv,login);
-            mv.addObject("success","Contato Salvo com sucesso!");
+            setMessageUser(mv, login);
+            mv.addObject("success", "Contato Salvo com sucesso!");
             return mv;
         }
     }
@@ -332,87 +324,87 @@ public class RequestController {
     }
 
     @GetMapping("/{id}")
-    public ModelAndView editarContato(@PathVariable String id,ContactRequest contactRequest,HttpSession session,HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException {
+    public ModelAndView editarContato(@PathVariable String id, ContactRequest contactRequest, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
         try {
-            userSession(session,request,response);
+            userSession(session, request, response);
             Contact contact = contactService.findContactById(UUID.fromString(id));
             Login login = (Login) session.getAttribute(USER_AUTHENTICATED);
-            if(contact != null){
+            if (contact != null) {
                 //contact exist
                 contactRequest.fromContact(contact);
                 ModelAndView mv = new ModelAndView("home/editarContato");
-                setMessageUser(mv,login);
-                mv.addObject("contactId",contact.getId());
+                setMessageUser(mv, login);
+                mv.addObject("contactId", contact.getId());
                 return mv;
             } else {
                 //contact not exist
                 ModelAndView mv = new ModelAndView("redirect:/home");
-                mv.addObject("error","Erro ao procurar contato!");
+                mv.addObject("error", "Erro ao procurar contato!");
                 return mv;
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             //contact not exist
             ModelAndView mv = new ModelAndView("redirect:/home");
-            mv.addObject("error","Erro ao procurar contato!");
+            mv.addObject("error", "Erro ao procurar contato!");
             return mv;
         }
 
     }
 
     @PostMapping("/{id}/editar")
-    public ModelAndView confirmarEdicaoContato(@Valid ContactRequest contactRequest,BindingResult bindingResult,@PathVariable UUID id,HttpSession session,HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException {
-        userSession(session,request,response);
+    public ModelAndView confirmarEdicaoContato(@Valid ContactRequest contactRequest, BindingResult bindingResult, @PathVariable UUID id, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+        userSession(session, request, response);
         Login login = (Login) session.getAttribute(USER_AUTHENTICATED);
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             //error camp invalid
             ModelAndView mv = new ModelAndView("home/editarContato");
-            mv.addObject("contactId",id);
-            setMessageUser(mv,login);
+            mv.addObject("contactId", id);
+            setMessageUser(mv, login);
             return mv;
         } else {
             //edit contact
-            if(contactRequest.getEmail().equals("")){
+            if (contactRequest.getEmail().equals("")) {
                 contactRequest.setEmail("Não possui e-mail!");
             }
             contactRequest.setLogin(login);
-            contactService.replaceContact(contactRequest,id);
+            contactService.replaceContact(contactRequest, id);
             ModelAndView mv = new ModelAndView("redirect:/home");
-            setMessageUser(mv,login);
-            mv.addObject("success","Contato Editado com sucesso!");
+            setMessageUser(mv, login);
+            mv.addObject("success", "Contato Editado com sucesso!");
             return mv;
         }
     }
 
     @GetMapping("/limparLista")
-    public ModelAndView limparLista(HttpSession session,HttpServletRequest request,HttpServletResponse response,Pageable pageable) throws UnsupportedEncodingException {
-        userSession(session,request,response);
+    public ModelAndView limparLista(HttpSession session, HttpServletRequest request, HttpServletResponse response, Pageable pageable) throws UnsupportedEncodingException {
+        userSession(session, request, response);
         Login login = (Login) session.getAttribute(USER_AUTHENTICATED);
-        if(contactService.findAllContactByIdLogin(login.getId(),pageable).getTotalElements() > 0){
+        if (contactService.findAllContactByIdLogin(login.getId(), pageable).getTotalElements() > 0) {
             contactService.deleteAllContactByIdLogin(login.getId());
             ModelAndView mv = new ModelAndView("redirect:/home");
-            mv.addObject("success","Lista limpada com sucesso!");
+            mv.addObject("success", "Lista limpada com sucesso!");
             return mv;
         } else {
             ModelAndView mv = new ModelAndView("redirect:/home");
-            mv.addObject("error","Erro ao limpar Lista,pois ela está vazia!");
+            mv.addObject("error", "Erro ao limpar Lista,pois ela está vazia!");
             return mv;
         }
 
     }
 
     @GetMapping("/relatorio")
-    public ModelAndView relatorio(HttpSession session,HttpServletRequest request,HttpServletResponse response) throws IOException, DocumentException {
-        userSession(session,request,response);
+    public ModelAndView relatorio(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException, DocumentException {
+        userSession(session, request, response);
         Document document = new Document();
         Login login = (Login) session.getAttribute(USER_AUTHENTICATED);
         List<Contact> contacts = contactService.findAllContactByIdLogin(login.getId());
-        if(contacts.size() > 0){
+        if (contacts.size() > 0) {
             try {
                 response.setContentType("Apllication/pdf");
                 response.addHeader("Content-Disposition", "inline; filename=" + "contatos.pdf");
                 PdfWriter.getInstance(document, response.getOutputStream());
                 document.open();
-                document.add(new Paragraph("Relatório dos contatos de "+login.getName()+" :"));
+                document.add(new Paragraph("Relatório dos contatos de " + login.getName() + " :"));
                 document.add(new Paragraph(" "));
                 PdfPTable table = new PdfPTable(3);
                 table.addCell(new PdfPCell(new Paragraph("Nome")));
@@ -426,17 +418,17 @@ public class RequestController {
                 document.add(table);
                 document.close();
                 ModelAndView mv = new ModelAndView("redirect:/home");
-                mv.addObject("success","Relatório gerado com sucesso!");
+                mv.addObject("success", "Relatório gerado com sucesso!");
                 return mv;
             } catch (DocumentException | IOException e) {
                 document.close();
                 ModelAndView mv = new ModelAndView("redirect:/home");
-                mv.addObject("error","Erro ao gerar relatório!");
+                mv.addObject("error", "Erro ao gerar relatório!");
                 return mv;
             }
         } else {
             ModelAndView mv = new ModelAndView("redirect:/home");
-            mv.addObject("error","Erro ao gerar relatório, pois você não possui contatos!");
+            mv.addObject("error", "Erro ao gerar relatório, pois você não possui contatos!");
             return mv;
         }
 
@@ -468,5 +460,7 @@ public class RequestController {
     }
 
     @ModelAttribute(value = "contactRequest")
-    public ContactRequest getContactRequest(){return new ContactRequest();}
+    public ContactRequest getContactRequest() {
+        return new ContactRequest();
+    }
 }

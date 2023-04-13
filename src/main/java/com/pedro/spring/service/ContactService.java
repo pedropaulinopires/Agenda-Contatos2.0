@@ -1,7 +1,6 @@
 package com.pedro.spring.service;
 
 import com.pedro.spring.domain.Contact;
-import com.pedro.spring.domain.Login;
 import com.pedro.spring.repository.ContactRepository;
 import com.pedro.spring.request.ContactRequest;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,9 +26,7 @@ public class ContactService {
 
     //findById
     public Contact findContactById(UUID id) {
-        return contactRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Contact not found by id")
-        );
+        return contactRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Contact not found by id"));
     }
 
 
@@ -44,6 +40,7 @@ public class ContactService {
     public void deleteContactById(UUID id) {
         contactRepository.delete(findContactById(id));
     }
+
     //delete
     public void deleteAllContactByIdLogin(UUID id) {
         contactRepository.deleteAllContactByLogin(id);
@@ -51,11 +48,11 @@ public class ContactService {
 
 
     //find all contacts by id login
-    public Page<Contact> findAllContactByIdLogin(UUID id, Pageable pageable){
-        return contactRepository.findAllByIdLogin(id,pageable);
+    public Page<Contact> findAllContactByIdLogin(UUID id, Pageable pageable) {
+        return contactRepository.findAllByIdLogin(id, pageable);
     }
 
-    public List<Contact> findAllContactByIdLogin(UUID id){
+    public List<Contact> findAllContactByIdLogin(UUID id) {
         return contactRepository.findAllByIdLogin(id);
     }
 

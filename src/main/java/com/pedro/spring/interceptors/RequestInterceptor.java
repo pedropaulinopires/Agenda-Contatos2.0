@@ -11,10 +11,10 @@ public class RequestInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         try {
-            if(CookieService.getCookie(request,"userAuthenticated") != null){
+            if (CookieService.getCookie(request, "userAuthenticated") != null) {
                 return true;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             response.sendRedirect("/");
             return false;
         }

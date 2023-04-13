@@ -17,38 +17,35 @@ public class LoginService {
     private final LoginRepository loginRepository;
 
     //save login
-    public Login saveLogin(LoginRequest login){
-       return loginRepository.save(login.build());
+    public Login saveLogin(LoginRequest login) {
+        return loginRepository.save(login.build());
     }
 
     //findById
-    public Login findLoginById(UUID id){
-        return loginRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST,"Login not found by id")
-        );
+    public Login findLoginById(UUID id) {
+        return loginRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Login not found by id"));
     }
 
     //find by username
-    public Login findLoginByUsername(String username){
+    public Login findLoginByUsername(String username) {
         return loginRepository.findByUsername(username);
     }
 
     //replace
-    public void replaceLogin(LoginRequest login,UUID id){
+    public void replaceLogin(LoginRequest login, UUID id) {
         findLoginById(id);
-        loginRepository.save(login.build(login,id));
+        loginRepository.save(login.build(login, id));
     }
 
     //replace
-    public void replaceLogin(Login login){
+    public void replaceLogin(Login login) {
         findLoginById(login.getId());
         loginRepository.save(login);
     }
 
 
-
     //delete
-    public void deleteLoginById(UUID id){
+    public void deleteLoginById(UUID id) {
         loginRepository.delete(findLoginById(id));
     }
 
