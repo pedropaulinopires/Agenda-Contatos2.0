@@ -446,7 +446,7 @@ public class RequestController {
         Context context = new Context();
         context.setVariable("login", login);
         context.setVariable("list", listContact);
-        String processingHtml = templateEngine.process("contatos", context);
+        String processingHtml = templateEngine.process("relatorio/contatos", context);
         ByteArrayOutputStream target = new ByteArrayOutputStream();
         ConverterProperties converterProperties = new ConverterProperties();
         converterProperties.setBaseUri("http://localhost:8080/");
