@@ -397,47 +397,6 @@ public class RequestController {
 
     }
 
-//    @GetMapping("/relatorio")
-//    public ModelAndView relatorio(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException, DocumentException {
-//        userSession(session, request, response);
-//        Document document = new Document();
-//        Login login = (Login) session.getAttribute(USER_AUTHENTICATED);
-//        List<Contact> contacts = contactService.findAllContactByIdLogin(login.getId());
-//        if (contacts.size() > 0) {
-//            try {
-//                response.setContentType("Apllication/pdf");
-//                response.addHeader("Content-Disposition", "inline; filename=" + "contatos.pdf");
-//                PdfWriter.getInstance(document, response.getOutputStream());
-//                document.open();
-//                document.add(new Paragraph("Relatório dos contatos de " + login.getName() + " :"));
-//                document.add(new Paragraph(" "));
-//                PdfPTable table = new PdfPTable(3);
-//                table.addCell(new PdfPCell(new Paragraph("Nome")));
-//                table.addCell(new PdfPCell(new Paragraph("Telefone")));
-//                table.addCell(new PdfPCell(new Paragraph("E-mail")));
-//                for (Contact contactsList : contacts) {
-//                    table.addCell(contactsList.getName());
-//                    table.addCell(contactsList.getNumber().toString());
-//                    table.addCell(contactsList.getEmail());
-//                }
-//                document.add(table);
-//                document.close();
-//                ModelAndView mv = new ModelAndView("redirect:/home");
-//                mv.addObject("success", "Relatório gerado com sucesso!");
-//                return mv;
-//            } catch (DocumentException | IOException e) {
-//                document.close();
-//                ModelAndView mv = new ModelAndView("redirect:/home");
-//                mv.addObject("error", "Erro ao gerar relatório!");
-//                return mv;
-//            }
-//        } else {
-//            ModelAndView mv = new ModelAndView("redirect:/home");
-//            mv.addObject("error", "Erro ao gerar relatório, pois você não possui contatos!");
-//            return mv;
-//        }
-//
-//    }
 
     @RequestMapping(path = "/relatorio")
     public ResponseEntity<?> relatorio(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException{
