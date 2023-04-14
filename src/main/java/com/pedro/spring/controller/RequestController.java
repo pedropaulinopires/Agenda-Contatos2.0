@@ -1,11 +1,9 @@
 package com.pedro.spring.controller;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
+
+import com.itextpdf.html2pdf.ConverterProperties;
+import com.itextpdf.html2pdf.HtmlConverter;
+import com.itextpdf.io.source.ByteArrayOutputStream;
 import com.pedro.spring.domain.Contact;
 import com.pedro.spring.domain.Login;
 import com.pedro.spring.enums.Sex;
@@ -27,11 +25,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -53,6 +56,7 @@ public class RequestController {
     private final String USER_AUTHENTICATED = "userAuthenticated";
     private final LoginService loginService;
     private final ContactService contactService;
+    private final TemplateEngine templateEngine;
 
     @Bean
     public BCryptPasswordEncoder getPasswordEncoder() {
@@ -392,46 +396,63 @@ public class RequestController {
 
     }
 
-    @GetMapping("/relatorio")
-    public ModelAndView relatorio(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException, DocumentException {
-        userSession(session, request, response);
-        Document document = new Document();
-        Login login = (Login) session.getAttribute(USER_AUTHENTICATED);
-        List<Contact> contacts = contactService.findAllContactByIdLogin(login.getId());
-        if (contacts.size() > 0) {
-            try {
-                response.setContentType("Apllication/pdf");
-                response.addHeader("Content-Disposition", "inline; filename=" + "contatos.pdf");
-                PdfWriter.getInstance(document, response.getOutputStream());
-                document.open();
-                document.add(new Paragraph("Relatório dos contatos de " + login.getName() + " :"));
-                document.add(new Paragraph(" "));
-                PdfPTable table = new PdfPTable(3);
-                table.addCell(new PdfPCell(new Paragraph("Nome")));
-                table.addCell(new PdfPCell(new Paragraph("Telefone")));
-                table.addCell(new PdfPCell(new Paragraph("E-mail")));
-                for (Contact contactsList : contacts) {
-                    table.addCell(contactsList.getName());
-                    table.addCell(contactsList.getNumber().toString());
-                    table.addCell(contactsList.getEmail());
-                }
-                document.add(table);
-                document.close();
-                ModelAndView mv = new ModelAndView("redirect:/home");
-                mv.addObject("success", "Relatório gerado com sucesso!");
-                return mv;
-            } catch (DocumentException | IOException e) {
-                document.close();
-                ModelAndView mv = new ModelAndView("redirect:/home");
-                mv.addObject("error", "Erro ao gerar relatório!");
-                return mv;
-            }
-        } else {
-            ModelAndView mv = new ModelAndView("redirect:/home");
-            mv.addObject("error", "Erro ao gerar relatório, pois você não possui contatos!");
-            return mv;
-        }
+//    @GetMapping("/relatorio")
+//    public ModelAndView relatorio(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException, DocumentException {
+//        userSession(session, request, response);
+//        Document document = new Document();
+//        Login login = (Login) session.getAttribute(USER_AUTHENTICATED);
+//        List<Contact> contacts = contactService.findAllContactByIdLogin(login.getId());
+//        if (contacts.size() > 0) {
+//            try {
+//                response.setContentType("Apllication/pdf");
+//                response.addHeader("Content-Disposition", "inline; filename=" + "contatos.pdf");
+//                PdfWriter.getInstance(document, response.getOutputStream());
+//                document.open();
+//                document.add(new Paragraph("Relatório dos contatos de " + login.getName() + " :"));
+//                document.add(new Paragraph(" "));
+//                PdfPTable table = new PdfPTable(3);
+//                table.addCell(new PdfPCell(new Paragraph("Nome")));
+//                table.addCell(new PdfPCell(new Paragraph("Telefone")));
+//                table.addCell(new PdfPCell(new Paragraph("E-mail")));
+//                for (Contact contactsList : contacts) {
+//                    table.addCell(contactsList.getName());
+//                    table.addCell(contactsList.getNumber().toString());
+//                    table.addCell(contactsList.getEmail());
+//                }
+//                document.add(table);
+//                document.close();
+//                ModelAndView mv = new ModelAndView("redirect:/home");
+//                mv.addObject("success", "Relatório gerado com sucesso!");
+//                return mv;
+//            } catch (DocumentException | IOException e) {
+//                document.close();
+//                ModelAndView mv = new ModelAndView("redirect:/home");
+//                mv.addObject("error", "Erro ao gerar relatório!");
+//                return mv;
+//            }
+//        } else {
+//            ModelAndView mv = new ModelAndView("redirect:/home");
+//            mv.addObject("error", "Erro ao gerar relatório, pois você não possui contatos!");
+//            return mv;
+//        }
+//
+//    }
 
+    @RequestMapping(path = "/relatorio")
+    public ResponseEntity<?> relatorio(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException{
+        userSession(session, request, response);
+        Login login = (Login) session.getAttribute(USER_AUTHENTICATED);
+        List<Contact> listContact = contactService.findAllContactByIdLogin(login.getId());
+        Context context = new Context();
+        context.setVariable("login", login);
+        context.setVariable("list", listContact);
+        String processingHtml = templateEngine.process("contatos", context);
+        ByteArrayOutputStream target = new ByteArrayOutputStream();
+        ConverterProperties converterProperties = new ConverterProperties();
+        converterProperties.setBaseUri("http://localhost:8080/");
+        HtmlConverter.convertToPdf(processingHtml, target, converterProperties);
+        byte[] bytes = target.toByteArray();
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=contatos.pdf").contentType(MediaType.APPLICATION_PDF).body(bytes);
     }
 
 

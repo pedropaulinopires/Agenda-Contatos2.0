@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Contatos</title>
+    <link rel="stylesheet" th:href="@{css/contatos.css}">
+  </head>
+  <body>
+    <h3>Lista de contatos de <span th:text="${login.name}"></span></h3>
+    <table>
+        <thead>
+            <th scope="col">Nome</th>
+            <th scope="col">Telefone</th>
+            <th scope="col">E-mail</th>
+        </thead>
+        <tbody th:each="list : ${list}">
+            <td th:text="${list.name}"></td>
+            <td th:text="${list.number}"></td>
+            <td th:text="${list.email}"></td>
+        </tbody>
+    </table>
+  </body>
+</html>
